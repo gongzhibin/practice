@@ -74,6 +74,35 @@ const { name: myName, age: myAge } = billgong;
 console.log(`my name is ${myName}, my age is ${myAge}`);
 
 
-const numbers = [1, 2, 3];
+const numbers = [1, 2, 3, 4];
 const [firstNumber, secondNumber] = numbers;
 console.log(`first number is ${firstNumber},second number is ${secondNumber}`)
+
+const newNumbers = numbers.map(currentValue => currentValue * currentValue);
+console.log(newNumbers); // [1 , 4, 9, 16]
+
+const sum = numbers.reduce((accumulator, currentValue) => { return accumulator + currentValue }, 5);
+console.log(sum); // 15
+
+// 没有返回值
+numbers.forEach(currentValue => { console.log(currentValue + 1) })
+
+// this详解
+// 浏览器全局环境中，this === widow 返回 true
+// node全局环境中，this === global 返回 false
+console.log(this === global);
+
+let testThis = '全局环境';
+function f1(){
+    return this;
+}
+console.log(f1().testThis);
+let foo = {
+    testThis: "foo环境",
+    bar() {
+        let testThis = "bar环境";
+        return this.testThis;
+    }
+}
+let value = foo.bar();
+console.log(value)
