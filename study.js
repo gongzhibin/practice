@@ -121,9 +121,48 @@ console.log(obj2);
 
 // 创建Promise
 const myPromise = new Promise((resolve, reject) => {
-    setTimeout(() => { resolve("成功") }, 1000);
+    try {
+        throw new Error('zxlg is too handsome to cause the program to crash!');
+        resolve("success");  //执行了resolve之后不继续向后执行
+        // throw new Error('zxlg is too handsome to cause the program to crash!');
+    } catch (error) {
+        reject(error);
+    }
+
 });
 
-myPromise.then((successMessage) => {
-    console.log(`zxlg: ${successMessage}`)
+myPromise.then((message) => {
+    console.log(message);
+}).catch((error) => {
+    console.log(error);
+    throw new Error('zxlg is BOOM!')
+}).catch((error) => {
+    console.log(error);
 })
+
+const anotherPromise = new Promise((resolve, reject) => {
+    resolve("success!");
+})
+
+let p1 = Promise.all([myPromise, anotherPromise]);
+
+p1.then((res) => {
+    console.log(res[0]);
+    console.log(res[1]);
+}).catch((err) => {
+    console.log(err);
+})
+
+
+// 迭代器和生成器练习
+function *createIterator(items) {
+    for (let i = 0; i < items.length; i++) {
+        yield items[i];
+    }
+}
+
+let iterator = createIterator([1, 2, 3]);
+console.log(iterator.next());
+console.log(iterator.next());
+console.log(iterator.next());
+console.log(iterator.next());
