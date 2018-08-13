@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>this指向</title>
+</head>、
+
+<!-- 当函数被用作DOM事件处理函数时，它的this指向触发事件的元素 -->
+<button id="test">点击</button>
+<!-- 内联元this素指向监听器所在的DOM元素 -->
+<button onclick="alert(this.tagName.toLowerCase())">点击</button>
+
+<body>
+    <script>
+        console.log(this === window);
+        var testThis = "this为全局对象"
+
+
+        var f1 = function () {
+            var testThis = "this为f1对象"
+            return this.testThis;
+        }
+        // 输出的this处于全局环境中
+        console.log(f1());
+
+        // 在严格模式下，this将保持他进入执行上下文时的值，所以下面的this将会默认为undefined。
+        var f2 = function () {
+            'use strict'
+            // return this.testThis; // undefined
+        }
+        // console.log(f2() === undefined);
+
+        var foo = {
+            testThis: "this为foo对象"
+        }
+        function f3() {
+            return this.testThis;
+        }
+        console.log(f3());
+        //  call 或 apply 方法将 this 值绑定到调用中的特定对象
+        console.log(f3.call(foo));
+        console.log(f3.apply(foo));
+
+        var obj1 = {
+            testThis: "this为obj1对象"
+        }
+        var obj2 = {
+            testThis: "this为obj2对象"
+        }
+
+        // this将永久地被绑定到了bind的第一个参数，无论这个函数是如何被调用的
+        var newF3 = f3.bind(obj1);
+        console.log(newF3());
+
+        // bind只能生效一次，不能继续绑定
+        var newNewF3 = newF3.bind(obj2);
+        console.log(newNewF3());
+
+        // 箭头函数中，this与上下文保持一致。在全局代码中，被设置为全局对象
+        console.log((() => {
+            return this.testThis;
+        })())
+
+        // 作为对象的方法,this是调用该函数的对象 
+        var obj3 = {
+            testThis: "this为obj3对象",
+            obj3Func: function () {
+                return this.testThis
+            }
+        }
+        console.log(obj3.obj3Func());
+
+        // 原型链中的this
+        var obj4 = {
+            testThis: "this为obj4对象",
+            obj4Func: function () {
+                return this.testThis
+            }
+        }
+        var obj4Child = Object.create(obj4);
+        obj4Child.testThis = "this为obj4Child对象"
+        console.log(obj4Child.obj4Func());
+
+        // 虽然构造器返回的默认值是this所指的那个对象
+        // 但它仍可以手动返回其他的对象（如果返回值不是一个对象，则返回this对象）。
+        function MyConstructor1() {
+            this.testThis = "this是构造函数1对象"
+        }
+        var func = new MyConstructor1();
+        console.log(func.testThis);
+
+
+        function MyConstructor2() {
+            this.testThis = "this是构造函数2对象"
+            return {
+                testThis: "this是手动返回的对象"
+            }
+        }
+        var func = new MyConstructor2();
+        console.log(func.testThis);
+        document.getElementById("test").addEventListener("click", function (event) {
+            console.log(event);
+            console.log(this === event.currentTarget);
+        }, false);
+    </script>
+</body>
+
+</html>
