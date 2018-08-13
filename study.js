@@ -93,7 +93,7 @@ numbers.forEach(currentValue => { console.log(currentValue + 1) })
 console.log(this === global);
 
 let testThis = '全局环境';
-function f1(){
+function f1() {
     return this;
 }
 console.log(f1().testThis);
@@ -106,3 +106,24 @@ let foo = {
 }
 let value = foo.bar();
 console.log(value)
+
+// 展开运算符
+const obj1 = {
+    a: { a: 1 },
+    b: { b: 1 }
+}
+const obj2 = {
+    ...obj1,
+    c: { c: 1 }
+}
+console.log(obj2);
+console.log(obj2);
+
+// 创建Promise
+const myPromise = new Promise((resolve, reject) => {
+    setTimeout(() => { resolve("成功") }, 1000);
+});
+
+myPromise.then((successMessage) => {
+    console.log(`zxlg: ${successMessage}`)
+})
