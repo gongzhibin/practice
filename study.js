@@ -155,6 +155,12 @@ p1.then((res) => {
 
 
 // 迭代器和生成器练习
+/**
+ * 函数名前或者function后加*号‘
+ * 使用yield进行暂停
+ * 调用next方法进行，进行继续执行操作，返回对应的数据
+ * @param {*} items
+ */
 function* createIterator(items) {
     for (let i = 0; i < items.length; i++) {
         yield items[i];
