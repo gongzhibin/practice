@@ -135,7 +135,7 @@ myPromise.then((message) => {
     console.log(message);
 }).catch((error) => {
     console.log(error);
-    throw new Error('zxlg is BOOM!')
+    throw new Error('myPromise BOOM!')
 }).catch((error) => {
     console.log(error);
 })
@@ -155,7 +155,7 @@ p1.then((res) => {
 
 
 // 迭代器和生成器练习
-function *createIterator(items) {
+function* createIterator(items) {
     for (let i = 0; i < items.length; i++) {
         yield items[i];
     }
@@ -166,3 +166,40 @@ console.log(iterator.next());
 console.log(iterator.next());
 console.log(iterator.next());
 console.log(iterator.next());
+
+
+function outputAfater2s(num) {
+    return new Promise((resolve, reject) => {
+        try {
+            setTimeout(() => { resolve(num * 2) }, 2000);
+        } catch (err) {
+            reject(err);
+        }
+    })
+}
+
+
+/**
+ * async函数返回一个promise对象
+ * 与Generator不同的是，其内置执行器，不需要调用next()方法
+ * await后面也必须是一个promise对象，由于可能发生错误，所以最好将其置于try catch代码块中
+ */
+async function asyncFunc() {
+    try {
+        // 异步操作继发关系
+        // await outputAfater2s();
+        // console.log('第一个2s');
+        // await outputAfater2s();
+        // console.log('第二个2s');
+
+        // 异步操作独立关系
+        let res = await Promise.all([outputAfater2s(10), outputAfater2s(20)]);
+        console.log(res[0], res[1]);
+        throw new Error('asyncFunc BOOM');
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+
+asyncFunc();
