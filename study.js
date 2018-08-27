@@ -209,3 +209,42 @@ async function asyncFunc() {
 }
 
 asyncFunc();
+
+// 代理和反射
+
+// let target = {};
+// let proxy = new Proxy(target, {});
+
+// proxy.name = "proxy";
+// console.log(proxy.name, target.name);
+
+// target.name = "target";
+// console.log(proxy.name, target.name);
+
+
+let target = {
+    name: "target"
+}
+
+let proxy = new Proxy(target, {
+    set(trapTarget, key, value, receiver) {
+
+        // 已有属性不受影响
+        if (!trapTarget.hasOwnProperty(key)) {
+            // 新建属性必须是数字
+            if (isNaN(value)) {
+                throw new TypeError("属性必须是数字");
+            }
+        }
+
+        // 添加属性
+        return Reflect.set(trapTarget, key, value, receiver)
+    }
+})
+
+proxy.count = 1;
+console.log(proxy.count, target.count);
+
+
+proxy.anotherName = 'proxy';
+console.log(proxy.anotherName, target.anotherName);
