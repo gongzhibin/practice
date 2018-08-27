@@ -5,24 +5,24 @@ const atom = {
         return atom.value + value;
     }
 };
-console.log(atom.addValue(1));
+// console.log(atom.addValue(1));
 
 // 对象属性简写
 const name = 'zxlg';
 const person = {
     name
 }
-console.log(person);
+// console.log(person);
 
 // 浅拷贝对象
 const origin = { a: 1, b: 2 };
 const copy = { ...origin, c: 3 };
-console.log(copy);
+// console.log(copy);
 
 // 复制数组
 const arr = [1, 2, 3, 4, 5];
 const arr_copy = [...arr];
-console.log(arr_copy);
+// console.log(arr_copy);
 
 //使用Array.from对可迭代的对象进行数组转换，因为它避免创建中间数组。
 
@@ -35,11 +35,11 @@ const zxlg = {
     firstName: 'bill',
     lastName: 'gong'
 };
-console.log(getFullName(zxlg));
+// console.log(getFullName(zxlg));
 
 // 数组解构
 const [first, second] = arr;
-console.log(first, second);
+// console.log(first, second);
 
 // 当您必须使用匿名函数（如在传递一个内联回调时），请使用箭头函数表示法
 const arr1 = [1, 2, 3];
@@ -47,7 +47,7 @@ const arr2 = arr1.map((x) => {
     const y = x * x;
     return y;
 });
-console.log(arr2);
+// console.log(arr2);
 
 // 使用默认的传参而不是改变函数的参数
 
@@ -64,39 +64,41 @@ const getName = function (pram) {
     return billgong[pram];
 }
 
-console.log(getName('name'));
+// console.log(getName('name'));
 
 // 总是使用 const 或 let 来声明变量
 
 
 // 解构
 const { name: myName, age: myAge } = billgong;
-console.log(`my name is ${myName}, my age is ${myAge}`);
+// console.log(`my name is ${myName}, my age is ${myAge}`);
 
 
 const numbers = [1, 2, 3, 4];
 const [firstNumber, secondNumber] = numbers;
-console.log(`first number is ${firstNumber},second number is ${secondNumber}`)
+// console.log(`first number is ${firstNumber},second number is ${secondNumber}`)
 
 const newNumbers = numbers.map(currentValue => currentValue * currentValue);
-console.log(newNumbers); // [1 , 4, 9, 16]
+// console.log(newNumbers); // [1 , 4, 9, 16]
 
 const sum = numbers.reduce((accumulator, currentValue) => { return accumulator + currentValue }, 5);
-console.log(sum); // 15
+// console.log(sum); // 15
 
 // 没有返回值
-numbers.forEach(currentValue => { console.log(currentValue + 1) })
+numbers.forEach(currentValue => {
+    // console.log(currentValue + 1) 
+})
 
 // this详解
 // 浏览器全局环境中，this === widow 返回 true
 // node全局环境中，this === global 返回 false
-console.log(this === global);
+// console.log(this === global);
 
 let testThis = '全局环境';
 function f1() {
     return this;
 }
-console.log(f1().testThis);
+// console.log(f1().testThis);
 let foo = {
     testThis: "foo环境",
     bar() {
@@ -105,7 +107,7 @@ let foo = {
     }
 }
 let value = foo.bar();
-console.log(value)
+// console.log(value)
 
 // 展开运算符
 const obj1 = {
@@ -116,8 +118,8 @@ const obj2 = {
     ...obj1,
     c: { c: 1 }
 }
-console.log(obj2);
-console.log(obj2);
+// console.log(obj2);
+// console.log(obj2);
 
 // 创建Promise
 const myPromise = new Promise((resolve, reject) => {
@@ -132,12 +134,12 @@ const myPromise = new Promise((resolve, reject) => {
 });
 
 myPromise.then((message) => {
-    console.log(message);
+    // console.log(message);
 }).catch((error) => {
-    console.log(error);
+    // console.log(error);
     throw new Error('myPromise BOOM!')
 }).catch((error) => {
-    console.log(error);
+    // console.log(error);
 })
 
 const anotherPromise = new Promise((resolve, reject) => {
@@ -147,10 +149,10 @@ const anotherPromise = new Promise((resolve, reject) => {
 let p1 = Promise.all([myPromise, anotherPromise]);
 
 p1.then((res) => {
-    console.log(res[0]);
-    console.log(res[1]);
+    // console.log(res[0]);
+    // console.log(res[1]);
 }).catch((err) => {
-    console.log(err);
+    // console.log(err);
 })
 
 
@@ -168,10 +170,10 @@ function* createIterator(items) {
 }
 
 let iterator = createIterator([1, 2, 3]);
-console.log(iterator.next());
-console.log(iterator.next());
-console.log(iterator.next());
-console.log(iterator.next());
+// console.log(iterator.next());
+// console.log(iterator.next());
+// console.log(iterator.next());
+// console.log(iterator.next());
 
 
 function outputAfater2s(num) {
@@ -200,10 +202,10 @@ async function asyncFunc() {
 
         // 异步操作独立关系
         let res = await Promise.all([outputAfater2s(10), outputAfater2s(20)]);
-        console.log(res[0], res[1]);
+        // console.log(res[0], res[1]);
         throw new Error('asyncFunc BOOM');
     } catch (error) {
-        console.log(error);
+        // console.log(error);
     }
 
 }
@@ -231,6 +233,7 @@ let proxy = new Proxy(target, {
 
         // 已有属性不受影响
         if (!trapTarget.hasOwnProperty(key)) {
+            // isNaN会把非数字的转换为数字
             // 新建属性必须是数字
             if (isNaN(value)) {
                 throw new TypeError("属性必须是数字");
@@ -243,8 +246,62 @@ let proxy = new Proxy(target, {
 })
 
 proxy.count = 1;
-console.log(proxy.count, target.count);
+// console.log(proxy.count, target.count);
 
 
-proxy.anotherName = 'proxy';
-console.log(proxy.anotherName, target.anotherName);
+proxy.anotherName = '12';
+// console.log(proxy.anotherName, target.anotherName);
+
+
+let aObj = {
+
+};
+let a = '';
+Object.defineProperty(aObj, 'a', {
+    get() {
+        console.log('get val');
+        return a;
+    },
+    set(newVal) {
+        console.log('set val: ', newVal);
+        a = newVal;
+    }
+});
+aObj.a;
+aObj.a = "zxlg";
+
+
+// 观察者模式
+// 主题对象（依赖收集类）
+let Dep = function () {
+    this.subs = []; // 订阅者列表
+}
+
+// 主题对象（依赖收集类）通知订阅者
+Dep.prototype.notify = function () {
+    this.subs.forEach(function (sub) { // 遍历所有订阅者
+        sub.update(); // 订阅者更新
+    })
+};
+
+function Sub(x) { // 订阅者
+    this.x = x;
+}
+
+Sub.prototype.update = function () { //订阅者更新
+    this.x = this.x + 1;
+    // console.log(this.x);
+}
+
+let pub = { // 发布者
+    publish() {
+        dep.notify();
+    }
+}
+
+let dep = new Dep(); // 主题对象实例
+Array.prototype.push.call(dep.subs, new Sub(1), new Sub(2), new Sub(4)); // 新增3个订阅者
+
+pub.publish(); // 发布者发布更新
+
+// 发布者pub发出通知notify，主题对象Dep收到通知并推送给订阅者Sub，订阅者执行相应操作update
