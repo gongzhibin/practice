@@ -8,24 +8,24 @@ class EventBus {
      * @description 订阅事件
      * @date 2018-09-12
      * @param {String} type 订阅事件类型
-     * @param {Function} callback 处理函数
+     * @param {Function} handler 处理函数
      * @param {Object} scope 订阅事件的DOM元素
      * @memberof EventBus
      * @returns {undefined} 无
      */
-    subscribe(type, callback, scope) {
+    subscribe(type, handler, scope) {
         // 输入检查 TBD
 
         if (this.events[type]) {
             this.events[type].push({
                 scope,
-                callback
+                handler
             });
         } else {
             this.events[type] = [
                 {
                     scope,
-                    callback
+                    handler
                 }
             ];
         }
@@ -35,18 +35,18 @@ class EventBus {
      * @description
      * @date 2018-09-12
      * @param {String} type 取消订阅事件类型
-     * @param {Function} callback 取消订阅事件的处理函数
+     * @param {Function} handler 取消订阅事件的处理函数
      * @param {Object} scope 取消订阅事件的DOM元素
      * @memberof EventBus
      * @returns {undefined} 无
      */
-    unSubscribe(type, callback, scope) {
+    unSubscribe(type, handler, scope) {
         // 输入检查 TBD
 
         if (this.events[type]) {
             // 不止一个订阅
             if (this.events[type].length > 1) {
-                const firstIndex = this.events[type].findIndex((cv) => cv.scope === scope && cv.callback === callback);
+                const firstIndex = this.events[type].findIndex((cv) => cv.scope === scope && cv.handler === handler);
 
                 if (firstIndex === -1) {
                     console.log("this type of event do not have this callback");
@@ -89,8 +89,8 @@ class EventBus {
 
         if (this.events[type]) {
             this.events[type].map((event) => {
-                if (event && event.callback) {
-                    Reflect.apply(event.callback, event.scope, [type, target]);
+                if (event && event.handler) {
+                    Reflect.apply(event.handler, event.scope, [type, target]);
                 }
             });
         } else {
