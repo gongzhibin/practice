@@ -1,0 +1,22 @@
+.tab-list {
+    display: flex;
+    border: 1px solid #ea4335;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+.tab-item {
+    flex: 1;
+    margin: 0 20px;
+    padding: 10px;
+    background-color: #5ec57a;
+    text-align: center;
+}
+.tab-item:focus,
+.tab-item:hover {
+    cursor: pointer;
+}
+.tab-show {
+    border: 1px solid #fbbc05;
+    padding: 10px;
+    text-align: center;
+}
