@@ -31,6 +31,7 @@ window.onload = function onload() {
     // tab显示区域 订阅事件
     eventBus.on("clickTab1", tab1Show1, {"name": "第一次订阅"});
     eventBus.on("clickTab1", tab1Show2, {"name": "第二次订阅"});
+
     const delay = 5000;
 
     setTimeout(() => {

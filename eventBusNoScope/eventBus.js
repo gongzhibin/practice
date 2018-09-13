@@ -25,6 +25,7 @@ class EventBus {
                 }
             ];
         }
+        console.log(`订阅了${type}事件的${handler.name}方法`);
         // if (isKeep) this.events[type].isKeep = true;
 
         return this;
@@ -39,8 +40,10 @@ class EventBus {
                     console.log(`${type}事件不存在${handler}处理器`);
                 } else if (this.events[type].length > 1) {
                     this.events[type].splice(firstIndex, 1);
+                    console.log(`取消订阅了${type}事件的${handler.name}方法`);
                 } else {
                     Reflect.deleteProperty(this.events, type);
+                    console.log(`取消订阅了${type}事件`);
                 }
             } else {
                 // handler不传入删除整个type下的所有处理器
